@@ -9,7 +9,7 @@ export default class LoginValidation {
     }
     const result = await User.findOne({ where: { email }, raw: true });
     if (!result) {
-      return res.status(404).json({ message: 'Incorrect email or password' });
+      return res.status(401).json({ message: 'Incorrect email or password' });
     }
     return next();
   };
