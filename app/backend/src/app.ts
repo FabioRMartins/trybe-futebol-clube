@@ -18,6 +18,7 @@ class App {
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.app.post('/login', loginValidation.validation, loginController.login);
+    this.app.get('/login/validate', loginController.loginValidation);
     this.app.get('/teams', teamsController.getAll);
     this.app.get('/teams/:id', teamsController.getById);
   }
