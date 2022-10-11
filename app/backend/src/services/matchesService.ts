@@ -23,4 +23,9 @@ export default class MatchesService {
 
     return result;
   }
+
+  public async createMatches(body: object): Promise<Matches> {
+    const result = await this.model.create({ ...body, inProgress: true });
+    return result as Matches;
+  }
 }
