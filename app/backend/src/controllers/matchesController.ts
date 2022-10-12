@@ -15,4 +15,10 @@ export default class MatchesController {
     const result = await this.matchesService.createMatches(req.body);
     return res.status(201).json(result);
   };
+
+  public editMatch = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await this.matchesService.editMatch(id);
+    return res.status(200).json(result);
+  };
 }

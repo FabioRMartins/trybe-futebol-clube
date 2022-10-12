@@ -28,4 +28,10 @@ export default class MatchesService {
     const result = await this.model.create({ ...body, inProgress: true });
     return result as Matches;
   }
+
+  public async editMatch(params: string): Promise<Matches> {
+    const result = await this.model.findOne({ where: { id: params } });
+    result?.set({ inProgress: false });
+    return { message: 'Finished' } as unknown as Matches;
+  }
 }

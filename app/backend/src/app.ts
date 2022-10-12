@@ -3,11 +3,13 @@ import LoginController from './controllers/loginController';
 import MatchesController from './controllers/matchesController';
 import TeamsController from './controllers/teamsController';
 import LoginValidation from './middlewares/loginValidation';
+import MatchesValidation from './middlewares/matchesValidation';
 
 const loginController = new LoginController();
 const loginValidation = new LoginValidation();
 const teamsController = new TeamsController();
 const matchesController = new MatchesController();
+const matchesValidation = new MatchesValidation();
 
 class App {
   public app: express.Express;
@@ -24,13 +26,23 @@ class App {
     this.app.get('/teams', teamsController.getAll);
     this.app.get('/teams/:id', teamsController.getById);
     this.app.get('/matches', matchesController.getAll);
-    this.app.post('/matches', matchesController.create);
+    this.app.post(
+      '/matches',
+
+      matchesValidation.validation,
+
+      matchesController.create,
+    );
+    this.app.patch('/matches/:id/finish', matchesController.editMatch);
   }
 
-  private config():void {
+  private config(): void {
     const accessControl: express.RequestHandler = (_req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
+      res.header(
+        'Access-Control-Allow-Methods',
+        'GET,POST,DELETE,OPTIONS,PUT,PATCH',
+      );
       res.header('Access-Control-Allow-Headers', '*');
       next();
     };
@@ -39,7 +51,7 @@ class App {
     this.app.use(accessControl);
   }
 
-  public start(PORT: string | number):void {
+  public start(PORT: string | number): void {
     this.app.listen(PORT, () => console.log(`Running on port ${PORT}`));
   }
 }
