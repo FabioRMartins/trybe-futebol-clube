@@ -31,7 +31,8 @@ export default class MatchesService {
 
   public async editMatch(params: string): Promise<Matches> {
     const result = await this.model.findOne({ where: { id: params } });
-    result?.set({ inProgress: false });
+    result?.set({ inProgress: 0 });
+    await result?.save();
     return { message: 'Finished' } as unknown as Matches;
   }
 }
