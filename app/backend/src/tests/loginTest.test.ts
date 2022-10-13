@@ -17,7 +17,7 @@ describe('/login', () => {
   describe('POST', () => {
 
     before(() => {
-      Sinon.stub(UsersModel, 'create').resolves({ } as UsersModel)
+      Sinon.stub(UsersModel, 'findOne').resolves({ } as UsersModel)
     });
 
     after(() => {
@@ -25,9 +25,8 @@ describe('/login', () => {
     });
 
     it('Deve cadastrar um usuário com sucesso', async () => {
-      const response = await (await chai.request(app).post('/login').send(dumpLogin)).header({'token': 'asdfkajsdhfkl'});
-      chai.expect(response.status).to.equal(201);
-      chai.expect(response.body).to.deep.equal({ id: 1, ...dumpLogin });
+      const response = await (await chai.request(app).post('/login').send(dumpLogin))
+      chai.expect(response.status).to.equal(200);
     });
 
     it('Não deve ser possível cadastrar um usuário sem nome', async () => {

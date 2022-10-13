@@ -4,12 +4,14 @@ import MatchesController from './controllers/matchesController';
 import TeamsController from './controllers/teamsController';
 import LoginValidation from './middlewares/loginValidation';
 import MatchesValidation from './middlewares/matchesValidation';
+import LeaderboardController from './controllers/leaderController';
 
 const loginController = new LoginController();
 const loginValidation = new LoginValidation();
 const teamsController = new TeamsController();
 const matchesController = new MatchesController();
 const matchesValidation = new MatchesValidation();
+const leaderboardController = new LeaderboardController();
 
 class App {
   public app: express.Express;
@@ -35,6 +37,7 @@ class App {
     );
     this.app.patch('/matches/:id', matchesController.updateMatch);
     this.app.patch('/matches/:id/finish', matchesController.editMatch);
+    this.app.get('/leaderboard/home', leaderboardController.getAll);
   }
 
   private config(): void {
