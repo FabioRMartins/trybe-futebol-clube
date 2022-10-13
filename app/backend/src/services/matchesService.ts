@@ -35,4 +35,12 @@ export default class MatchesService {
     await result?.save();
     return { message: 'Finished' } as unknown as Matches;
   }
+
+  public async updateMatch(id: string, homeTeamGoals: number, awayTeamGoals: number) {
+    const result = await this.model.findByPk(id);
+    if (result?.inProgress) {
+      await this.model.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+      return result;
+    }
+  }
 }

@@ -33,6 +33,7 @@ class App {
 
       matchesController.create,
     );
+    this.app.patch('/matches/:id', matchesController.updateMatch);
     this.app.patch('/matches/:id/finish', matchesController.editMatch);
   }
 
